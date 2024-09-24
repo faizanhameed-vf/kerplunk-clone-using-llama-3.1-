@@ -37,7 +37,6 @@ def generateDescription():
     else:
         st.write("Error fetching job description.")
 
-# Function to generate interview questions
 def generateQuestions():
     if st.session_state.job_description:
         url_llama_chat_questions = "http://127.0.0.1:8000/llama-chat-questions"
