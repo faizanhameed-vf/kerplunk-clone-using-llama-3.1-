@@ -16,7 +16,6 @@ if "questions" not in st.session_state:
 if "answers" not in st.session_state:
     st.session_state.answers = ""
 
-# Function to generate the job description
 def generateDescription():
     url_llama_chat = "http://127.0.0.1:8000/llama-chat/"
     data_llama_chat = {
