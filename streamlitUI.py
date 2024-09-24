@@ -71,8 +71,8 @@ def generateQuestions():
 def generateReview():
     url_llama_review = "http://127.0.0.1:8000/llama-chat-review"
     data_llama_review = {
-        "prompt": f"""Generate Review based on answers to these questions:\n {st.session_state.questions}\n 
-        answers: \n{st.session_state.answers}.
+        "prompt": f"""Generate Review based on answers: \n{st.session_state.answers} 
+        to these questions:\n {st.session_state.questions}\n.
         Write a short paragraph for each about the candidate's 
         Role Specific Capabilities (Asked through Technical Questions),
         Evaluation Notes (Conclusion, Pros, Cons, and things to follow up on),
@@ -92,7 +92,9 @@ def generateReview():
         7- Good potential - Good foundation and limited exposure
         8- Good potential - Good foundation and experience
         9- Excellent potential - Exceeds job expectations
-        10- Absolute Guru"""
+        10- Absolute Guru
+
+        """
     }
     
     response_llama_review = requests.post(url_llama_review, json=data_llama_review)
@@ -117,3 +119,5 @@ if jobTitle and jobCategory and jobSubCategory:
         if st.button("Submit Answers and Generate Review"):
             generateReview()
 
+else:
+    st.write(" ")
