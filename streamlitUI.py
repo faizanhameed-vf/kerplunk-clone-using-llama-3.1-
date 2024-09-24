@@ -117,5 +117,3 @@ if jobTitle and jobCategory and jobSubCategory:
         if st.button("Submit Answers and Generate Review"):
             generateReview()
 
-else:
-    st.write("Please fill out all fields to generate the job description.")
