@@ -69,32 +69,44 @@ def generateQuestions():
 def generateReview():
     url_llama_review = "http://127.0.0.1:8000/llama-chat-review"
     data_llama_review = {
-        "prompt": f"""Generate Review based on answers: \n{st.session_state.answers} 
-        to these questions:\n {st.session_state.questions}\n.
-        Write a short paragraph for each about the candidate's 
-        Role Specific Capabilities (Asked through Technical Questions),
-        Evaluation Notes (Conclusion, Pros, Cons, and things to follow up on),
-        and Personality.
-        
-        Rate the following 7 attributes on a scale of poor, fair, average, good, or excellent:
-        Leadership skills, Communication Skills, Attitude Towards Job, Maturity, 
-        Ability to get along with team, Logical Thought process, IQ Level.
-        
-        Provide the candidate's Technical Rating from the following options:
-        1- Absolute Rejection
-        2- Can try some time later
-        3- Average Exposure - Average Experience
-        4- Average Exposure - Very good in the tech we need
-        5- Average Potential - Limited exposure or can be tried on other things
-        6- Good potential - Good foundation but no exposure
-        7- Good potential - Good foundation and limited exposure
-        8- Good potential - Good foundation and experience
-        9- Excellent potential - Exceeds job expectations
-        10- Absolute Guru
-
-        """
-    }
+    "prompt": f"""Evaluate the candidate's answers critically based on the following job interview questions:
+    {st.session_state.questions}.
     
+    The candidate's answers are: \n{st.session_state.answers}.
+
+    For each question, assess the answer's correctness and quality by determining:
+    1. Whether the answer is **fully correct** and demonstrates a deep understanding.
+    2. Whether the answer is **partially correct** but lacks important details or precision.
+    3. Whether the answer is **incorrect**, irrelevant, or fails to address the question properly.
+    
+    For each answer, provide a short paragraph discussing:
+    - The candidate's understanding of the question.
+    - Strengths of the answer, if any.
+    - Weaknesses or gaps in the answer.
+    - Suggestions for improvement (where necessary).
+    
+    At the end of the review, provide an overall evaluation based on the candidate's ability to:
+    - Demonstrate **Role-Specific Capabilities** (Technical Skills).
+    - Exhibit **Leadership Skills**, **Communication Skills**, **Attitude**, **Maturity**, and the **Ability to work in a team**.
+    - Show **Logical Thinking** and **IQ level**.
+
+    Rate the candidate's performance on a scale of poor, fair, average, good, or excellent, based on their answers.
+    
+    Finally, provide a **Technical Rating** from the following options based on overall performance:
+    1. Absolute Rejection
+    2. Can try some time later
+    3. Average Exposure - Average Experience
+    4. Average Exposure - Very good in the tech we need
+    5. Average Potential - Limited exposure or can be tried on other things
+    6. Good potential - Good foundation but no exposure
+    7. Good potential - Good foundation and limited exposure
+    8. Good potential - Good foundation and experience
+    9. Excellent potential - Exceeds job expectations
+    10. Absolute Guru.
+    
+    Be fair and critical, and if the answers do not meet expectations, provide lower ratings accordingly."""
+}
+
     response_llama_review = requests.post(url_llama_review, json=data_llama_review)
     job_review = response_llama_review.json().get("response", "")
     st.write(job_review)
